@@ -42,11 +42,16 @@ rtc_date sys_rtc = {.date = 19,
 
 	uint8_t panel_addr = 0x64;
 
-	uint8_t led_pattern_1[16] = {0x0f,0x00,0x0f,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
-	uint8_t led_pattern_2[16] = {0x00,0x0f,0x00,0x0f,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
 	
-	uint8_t brightness[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20, 100, 250, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100};
-	//uint8_t LEDs[16]; 
+	
+	
+	
+	//uint8_t brightness_on_du[] = {100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 250, 100, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,};
+		
+		
+		
+	///uint8_t brightness[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20, 100, 250, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100};	
+
 	uint8_t pwmChannels[16];
 	
 		
@@ -90,10 +95,18 @@ int main(void)
 			uart_send_string((uint8_t *)char_array);
 			rtc_int_request = 0;
 			
-			//led_write_batch(panel_addr, led_pattern_1,sizeof(led_pattern_1));
-			//_delay_ms(250);
-			//led_write_batch(panel_addr, led_pattern_2,sizeof(led_pattern_2));
-			run_wave(brightness, pwmChannels);
+			
+			run_wave(ON_UP_DOWN);
+			//_delay_ms(1000);
+			run_wave(OFF_UP_DOWN);
+			//_delay_ms(1000);
+			run_wave(ON_DOWN_UP);
+			//_delay_ms(1000);
+			run_wave(OFF_DOWN_UP);
+			//_delay_ms(1000);
+			
+			//run_wave(brightness, pwmChannels, 1);
+			
 		}
 		
 		
