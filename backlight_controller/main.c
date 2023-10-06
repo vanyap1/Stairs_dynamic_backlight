@@ -40,13 +40,16 @@ rtc_date sys_rtc = {.date = 19,
 };
 
 
-uint8_t panel_addr = 0x64;
+	uint8_t panel_addr = 0x64;
 
-uint8_t reset_cmd[] = {0xa5, 0x5a};
-//uint8_t init_cmd[] = {0x80, 0x00, 0x00, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0x00, 0xAA, 0xAA, 0xAA, 0xAA};
-//uint8_t led_data[] = {0xa2, 0x0f, 0x0f, 0x0f, 0x0f, 0x0f, 0x0f, 0x0f, 0x0f, 0x0f, 0x0f, 0x0f, 0x0f, 0x0f, 0x0f, 0x0f, 0x0f};
-//uint8_t led1[]= {0xa2, 0, 0, 0};
+	uint8_t led_pattern_1[16] = {0x0f,0x00,0x0f,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+	uint8_t led_pattern_2[16] = {0x00,0x0f,0x00,0x0f,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
 	
+	uint8_t brightness[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20, 100, 250, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100};
+	//uint8_t LEDs[16]; 
+	uint8_t pwmChannels[16];
+	
+		
 ISR(INT0_vect){
 	rtc_int_request=1;
 	toggle_pin_level(&ld1);
@@ -68,15 +71,7 @@ int main(void)
 	rtc_int_enable(&sys_rtc ,0);
 	adc_init();
 	
-	
-    //twi_write_batch(panel_addr, reset_cmd, sizeof(reset_cmd));
-    //_delay_ms(10);
-    //led_board_init(panel_addr);
-	//_delay_ms(10);
-	//twi_write_batch(panel_addr, init_cmd, sizeof(init_cmd));
-    
-	//_delay_ms(10);
-	//twi_write_batch(panel_addr, led_data, sizeof(led_data));
+
 	led_board_sw_reset(panel_addr);
 	led_board_init(panel_addr);
 
@@ -95,9 +90,10 @@ int main(void)
 			uart_send_string((uint8_t *)char_array);
 			rtc_int_request = 0;
 			
-			
-			
-			//twi_write_batch(panel_addr, init_cmd, sizeof(init_cmd));
+			//led_write_batch(panel_addr, led_pattern_1,sizeof(led_pattern_1));
+			//_delay_ms(250);
+			//led_write_batch(panel_addr, led_pattern_2,sizeof(led_pattern_2));
+			run_wave(brightness, pwmChannels);
 		}
 		
 		

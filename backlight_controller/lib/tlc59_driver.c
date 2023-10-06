@@ -25,7 +25,7 @@ void led_board_sw_reset(uint8_t board_address){
 
 uint8_t led_board_init(uint8_t board_address){
 	uint8_t init_cmd[] = {0xAA, 0xAA, 0xAA, 0xAA};
-	uint8_t init_led_pattern[16] = {0x05,0x06,0x07,0x08,0x09,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+	uint8_t init_led_pattern[16] = {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
 	
 	uint8_t reg = 0;
 	reg = 0;
@@ -48,10 +48,32 @@ uint8_t led_board_init(uint8_t board_address){
 	
 }
 
-void led_write_batch(uint8_t board_address){
+void led_write_batch(uint8_t board_address, int *pwmChannels, uint8_t channels_num){
+	twi_write_batch_by_reg(board_address, PWM0 | 0xA0, pwmChannels, channels_num);
+}
+
+void led_write_single(uint8_t board_address, uint8_t led_num, uint8_t brightness){
 	
 }
 
-void led_write_single(uint8_t board_address){
-	
+void run_wave(uint8_t *brightness, uint8_t *pwmChannels) {
+
+				
+//uint8_t temp[16];
+uint8_t i;
+uint8_t shifts;
+
+for (shifts = 0; shifts < 16; shifts++) {
+	for (i = 0; i < 16; i++) {
+		pwmChannels[i] = brightness[i+shifts];
+	}
+	led_write_batch(TLC_ADDR, pwmChannels,16);
+	_delay_ms(50);
+}
+
+
+
+
+
+
 }

@@ -111,9 +111,9 @@
 
 void led_board_sw_reset(uint8_t board_address);
 uint8_t led_board_init(uint8_t board_address);
-void led_write_batch(uint8_t board_address);
-void led_write_single(uint8_t board_address);
-
+void led_write_batch(uint8_t board_address, int *pwmChannels, uint8_t channels_num);
+void led_write_single(uint8_t board_address, uint8_t led_num, uint8_t brightness);
+void run_wave(uint8_t *brightness, uint8_t *pwmChannels);
 
 #endif
 
