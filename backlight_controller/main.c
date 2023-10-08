@@ -82,6 +82,8 @@ int main(void)
 
 	
 	uart_send_string((uint8_t *)"RUN\n\r");
+		sleep_enable();
+		set_sleep_mode(SLEEP_MODE_PWR_DOWN);
     while (1) 
     {
 		
@@ -96,20 +98,20 @@ int main(void)
 			rtc_int_request = 0;
 			
 			
-			run_wave(ON_UP_DOWN);
+			//run_wave(ON_UP_DOWN);
 			//_delay_ms(1000);
-			run_wave(OFF_UP_DOWN);
+			//run_wave(OFF_UP_DOWN);
 			//_delay_ms(1000);
-			run_wave(ON_DOWN_UP);
+			//run_wave(ON_DOWN_UP);
 			//_delay_ms(1000);
-			run_wave(OFF_DOWN_UP);
+			//run_wave(OFF_DOWN_UP);
 			//_delay_ms(1000);
 			
 			//run_wave(brightness, pwmChannels, 1);
 			
 		}
 		
-		
+		sleep_cpu();
 		
 		
     }
