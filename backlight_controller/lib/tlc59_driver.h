@@ -15,10 +15,10 @@
 #define SHIF_DELAY		50
 
 //Wave config
-#define ON_UP_DOWN		0
-#define OFF_UP_DOWN		1
-#define ON_DOWN_UP		2
-#define OFF_DOWN_UP		3
+#define ON_UP_DOWN		1
+#define OFF_UP_DOWN		2
+#define ON_DOWN_UP		3
+#define OFF_DOWN_UP		4
 
 
 //9.5.1ModeRegister1(MODE1)
