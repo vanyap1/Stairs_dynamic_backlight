@@ -54,7 +54,9 @@ void led_write_batch(uint8_t board_address, int *pwmChannels, uint8_t channels_n
 }
 
 void led_write_single(uint8_t board_address, uint8_t led_num, uint8_t brightness){
-	
+	uint8_t ledAddr = led_num+2;
+	ledAddr = (ledAddr < 16) ? ledAddr : 15;
+	twi_write_batch_by_reg(board_address, ledAddr | 0xA0, brightness, 2);
 }
 
 void run_wave(uint8_t cmd) {
